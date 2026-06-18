@@ -1,55 +1,75 @@
-import React from 'react'
-import Image from 'next/image'
-import {Img, Lista} from "@/ts/footer";
+import {Img, Lista, Redes} from "@/ts/footer";
 export default function page() {
   return (
-    <div>
-      <section className='bg-tertiary/13 grid justify-center py-5'>
-        <p className='uppercase py-3 font-bold text-secondary'> 
-            Protegiendo la infraestructura del los usuarios en la región
-        </p>
-        <div className='flex  justify-evenly py-3'>
-            {Img.map((i)=>(
-                <div key={i.id} className="relative w-12 h-10">
-                    <Image
-                    className="hover:scale-100 hover:opacity-100 scale-90 opacity-50 object-cover transition-all duration-300"
-                    src={i.src}
-                    alt="Vercel logomark"
-                    fill
-                    />
-                </div>
-            ))}
-        </div>
-      </section>
-      <section className='bg-linear-to-b from-tertiary/13 to-tertiary/20 flex justify-between items-center py-6 px-8'>
-        <div>
+    <footer className="w-full bg-tertiary/15 flex flex-col">
+      <section className='px-4 md:px-8 py-8 md:py-12 flex flex-col gap-8 md:gap-10'>
+        <div className='flex flex-col md:flex-row justify-between items-center gap-6'>
             <h2 
-            className='text-primary font-bold uppercase text-[1.5rem] py-2'
+            className='text-primary font-bold uppercase text-2xl md:text-[1.5rem] tracking-wider text-center'
             >
-                    Proyect Walas
+                    Proyect alas
             </h2>
-            <p className='text-secondary font-light'>
-                @2026 Proyect Walas. Elite Excutive Protection.
-            </p>
+            <div className='flex gap-5 items-center'>
+                {Redes.map((r)=>(
+                    <a 
+                        key={r.id}
+                        href=''
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        aria-label={`Visitar nuestro perfil en ${r.name || 'redes sociales'}`}
+                        className="group relative w-7 h-7 hover:scale-110 transition-transform duration-300"
+                    >
+                        <svg 
+                           className="text-primary/50 group-hover:text-primary transition-colors duration-300 w-full h-full"
+                            viewBox="0 0 448 512"
+                        >
+                            <path  fill="currentColor" d={r.p}/>
+                        </svg>
+                    </a>
+                ))}
+            </div>
         </div>
-         <div
-            className='grid grid-flow-col gap-3'
-        >
-            {Lista.map((l)=>(
-                <a 
-                    key={l.id}
-                    href=""
-                    className='text-secondary px-4 py-2 border-b-2 border-transparent text-[1.15rem]
-                        hover:bg-primary/10 rounded-lg
-                        hover:text-primary hover:border-primary transition-all duration-300
-                    '
-                >
-                    {l.space}
-                </a>
-            ))}
+
+        <div className="flex flex-col items-center gap-6">
+            <p className='uppercase font-bold text-secondary/90 text-center text-sm md:text-base tracking-widest max-w-2xl text-balance'> 
+                Protegiendo la infraestructura del los usuarios en la región
+            </p>
+            <div className='flex flex-wrap justify-center gap-6 md:gap-10'>
+                {Img.map((i)=>(
+                    <div key={i.id} className="group relative w-8 h-8 md:w-10 md:h-10 hover:scale-110 transition-transform duration-300">
+                        <svg 
+                            className="text-secondary/50 group-hover:text-primary transition-colors duration-300 w-full h-full"
+                            viewBox="0 0 640 640"
+                        >
+                            <path  fill="currentColor" d={i.p}/>
+                        </svg>
+                    </div>
+                ))}
+            </div>
         </div>
       </section>
-    </div>
+
+      <section className='bg-linear-to-b from-transparent to-tertiary/20 px-4 md:px-8 py-6 flex flex-col items-center gap-6 border-t border-white/5'>
+        <nav>
+          <ul className="flex flex-wrap justify-center gap-x-6 gap-y-3">
+            {Lista.map((l) => (
+              <li key={l.id}>
+                <a
+                  href={l.url || '#'}
+                  className="text-secondary/80 text-sm md:text-base hover:text-primary transition-colors duration-300 whitespace-nowrap"
+                >
+                  {l.space}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+        
+        <p className="text-secondary/60 font-light text-center text-xs md:text-sm text-balance">
+          &copy; {new Date().getFullYear()} Proyect Alas. Elite Excutive Protection.
+        </p>
+      </section>
+    </footer>
   )
 }
 
