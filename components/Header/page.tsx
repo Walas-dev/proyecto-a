@@ -1,57 +1,47 @@
 'use client';
 import { useState } from 'react';
 import {Lista} from "@/ts/header";
-import Button from '../UI/Button';
-import { button } from '@/ts/hero';
 
 interface LinkData {
   id: string | number;
   space: string;
   url?: string;
+  p:string;
 }
 
 interface NavigationProps {
   Lista: LinkData[];
-  className?: string;       // Aquí inyectaremos 'hidden lg:flex' o el diseño móvil
-  isMobile?: boolean;       // Para cambiar el diseño interno (filas vs columnas)
-  onLinkClick?: () => void; // Para que el móvil sepa cuándo cerrar el menú
+  className?: string;      
+  isMobile?: boolean;       
+  onLinkClick?: () => void; 
 }
 
 const Nav = ({ Lista, className = '', isMobile = false, onLinkClick }: NavigationProps) => {
   return (
     <nav className={className}>
-      <ul className={`flex ${isMobile ? ' flex-col w-auto gap-4' : 'items-center gap-2 xl:gap-8'}`}>
+      <ul className={`flex ${isMobile ? ' flex-col w-auto ' : 'items-center gap-2 xl:gap-5'}`}>
         {Lista.map((l) => (
-          <li key={l.id} className={isMobile ? "border-b border-white/5 pb-2" : ""}>
+          <li key={l.id}>
             <a
               href={l.url || '#'}
               onClick={onLinkClick}
-              className={`text-secondary/90 transition-colors duration-300 px-4 py-2 rounded-lg text-base font-medium hover:bg-primary/10 hover:text-primary whitespace-nowrap ${
+              className={`group items-center text-secondary/90 transition-colors duration-300 px-4 py-2 rounded-lg text-base font-medium hover:text-primary whitespace-nowrap flex gap-1.5 ${
                 isMobile 
-                  ? 'block text-lg font-medium' 
-                  : 'px-4 py-2 rounded-lg text-base hover:bg-primary/10 hover:text-primary whitespace-nowrap'
+                  ? 'block text-lg font-medium hover:bg-primary/10 py-5' 
+                  : 'px-4 py-2 rounded-lg text-base hover:text-primary whitespace-nowrap'
               }`}
             >
-              {l.space}
+                <svg 
+                    viewBox="0 0 640 640"
+                    className={`w-6 h-6 md:w-7 md:h-7 transition-colors duration-300 text-white/50 group-hover:text-primary`}
+                >
+                    <path  fill="currentColor" d={l.p}/>
+                </svg>
+                {l.space}
             </a>
           </li>
         ))}
       </ul>
-      
-      <div className={`flex flex-col md:w-auto gap-4`}>
-        <Button variant='primary'>
-          <span>Solicitar Asesoría</span>
-          <div className="relative flex items-center justify-center w-5 h-5 md:w-6 md:h-6 shrink-0 group-hover:rotate-360deg transition-transform duration-500">
-            <svg 
-              className='w-full h-full transition-colors text-tertiary/90 group-hover:text-tertiary'
-              viewBox="0 0 640 640"
-            >
-              <path fill="currentColor" d="M224 0c-17.7 0-32 14.3-32 32l0 3.2C119 50 64 114.6 64 192l0 21.7c0 48.1-16.4 94.8-46.4 132.4L7.8 358.3C2.7 364.6 0 372.4 0 380.5 0 400.1 15.9 416 35.5 416l376.9 0c19.6 0 35.5-15.9 35.5-35.5 0-8.1-2.7-15.9-7.8-22.2l-9.8-12.2C400.4 308.5 384 261.8 384 213.7l0-21.7c0-77.4-55-142-128-156.8l0-3.2c0-17.7-14.3-32-32-32zM162 464c7.1 27.6 32.2 48 62 48s54.9-20.4 62-48l-124 0z"/>
-            </svg>
-          </div>
-        </Button>
-      </div>
-      
     </nav>
   );
 };
@@ -87,9 +77,14 @@ export default function page() {
                 </button>
 
                 <div 
-                    className={`lg:hidden absolute top-full left-0 w-full bg-black/50 backdrop-blur-3xl border-b border-white/10 overflow-hidden transition-all duration-300 ease-in-out ${
-                        isMenuOpen ? 'max-h-screen opacity-100 py-6 px-3 text-center' : 'max-h-0 opacity-0 py-0'
-                    }`}
+                    className={`
+                    lg:hidden absolute top-[110%] overflow-hidden transition-all duration-300 ease-in-out left-1/2 -translate-x-1/2 w-[98%] sm:w-[95%] rounded-2xl bg-neground backdrop-blur-3xl shadow-2xl shadow-black/50
+                        ${
+                            isMenuOpen 
+                            ? 'max-h-125 opacity-100  border border-white/15' 
+                            : 'max-h-0 opacity-0 py-0 border border-transparent'
+                        }
+                    `}
                 >
                     <Nav
                         Lista={Lista} 

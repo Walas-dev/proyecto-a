@@ -1,4 +1,5 @@
-import {Img, Lista, Redes} from "@/ts/footer";
+import {Img, Redes} from "@/ts/footer";
+import SVG from '../Footer/iluminarSVG'
 export default function page() {
   return (
     <footer className="w-full bg-tertiary/15 flex flex-col">
@@ -37,12 +38,10 @@ export default function page() {
             <div className='flex flex-wrap justify-center gap-6 md:gap-10'>
                 {Img.map((i)=>(
                     <div key={i.id} className="group relative w-8 h-8 md:w-10 md:h-10 hover:scale-110 transition-transform duration-300">
-                        <svg 
-                            className="text-secondary/50 group-hover:text-primary transition-colors duration-300 w-full h-full"
-                            viewBox="0 0 640 640"
-                        >
-                            <path  fill="currentColor" d={i.p}/>
-                        </svg>
+                        <SVG
+                        index={i.id}
+                          pathDirection={i.p}
+                        />
                     </div>
                 ))}
             </div>
@@ -50,21 +49,6 @@ export default function page() {
       </section>
 
       <section className='bg-linear-to-b from-transparent to-tertiary/20 px-4 md:px-8 py-6 flex flex-col items-center gap-6 border-t border-white/5'>
-        <nav>
-          <ul className="flex flex-wrap justify-center gap-x-6 gap-y-3">
-            {Lista.map((l) => (
-              <li key={l.id}>
-                <a
-                  href={l.url || '#'}
-                  className="text-secondary/80 text-sm md:text-base hover:text-primary transition-colors duration-300 whitespace-nowrap"
-                >
-                  {l.space}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </nav>
-        
         <p className="text-secondary/60 font-light text-center text-xs md:text-sm text-balance">
           &copy; {new Date().getFullYear()} Proyect Alas. Elite Excutive Protection.
         </p>

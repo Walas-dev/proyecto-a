@@ -24,10 +24,29 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
+      lang="es"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col bg-neground dark:bg-neground">
+
+        <div 
+          className="pointer-events-none fixed top-[-20%] left-[-20%] w-screen h-[100vw] md:w-[50vw] md:h-[50vw] z-0 opacity-15"
+          style={{
+            background: 'radial-gradient(circle, #C48B55 0%, transparent 70%)'
+          }}
+          aria-hidden="true" 
+        />
+        
+        <div 
+          className="pointer-events-none fixed bottom-[-20%] right-[-20%] w-[120vw] h-[120vw] md:w-[50vw] md:h-[50vw] z-1 opacity-15"
+          style={{
+            background: 'radial-gradient(circle, #C48B55 0%, transparent 70%)'
+          }}
+          aria-hidden="true" 
+        />
+
+        {children}
+      </body>
     </html>
   );
 }

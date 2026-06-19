@@ -7,9 +7,9 @@ import Proceso from "@/components/Process/page"
 import Ubication from "@/components/Ubication/page"
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 bg-neground font-sans dark:bg-neground">
+    <div className="flex flex-col flex-1 font-sans z-10">
       <Header/>
-      <main className="flex flex-1 flex-col items-center justify-between bg-neground dark:bg-neground">
+      <main className="flex flex-1 flex-col items-center justify-between">
         <Hero/>
         <Services/>
         <Ubication/>

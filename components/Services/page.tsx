@@ -8,10 +8,8 @@ export default function page() {
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
         {
          cards.map((c)=>(
-            <div key={c.id} className='group flex flex-col gap-5 bg-tertiary/50 rounded-2xl p-6 border-2 border-tertiary hover:border-primary hover:bg-primary/5 transition-colors duration-300 h-full'>
-                <div 
-                    className="relative w-9 h-6 md:w-10 md:h-7 shrink-0 group-hover:scale-110 transition-all"
-                >
+            <div key={c.id} className='group flex flex-col gap-5 bg-tertiary/50 rounded-2xl p-6 border-2 border-tertiary hover:border-primary hover:bg-primary/5 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-300 h-full'>
+                <div className="relative w-9 h-6 md:w-10 md:h-7 shrink-0 group-hover:scale-110 transition-all">
                     <svg 
                         className='absolute inset-0 transition-all text-secondary/50 group-hover:text-primary' 
                         viewBox="0 0 640 640"
