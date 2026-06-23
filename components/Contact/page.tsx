@@ -1,8 +1,10 @@
 import Button from '../UI/Button'
 import {button} from '@/ts/contact'
+import Fondo from './fondo'
 export default function page() {
   return (
-      <section className='w-full px-4 md:px-8 py-24 md:py-32 flex flex-col justify-center items-center text-center bg-tertiary/10'>
+      <section className='relative w-full min-h-[80vh] px-4 md:px-8 py-24 md:py-32 flex flex-col justify-center items-center text-center bg-tertiary/10'>
+        <Fondo/>
         <div className='flex flex-col items-center max-w-3xl mx-auto'>
             <h2 className='text-[1.85rem] md:text-5xl lg:text-[3rem] font-extrabold leading-tight text-balance mb-6'>
               ¿Está su infraestructura
