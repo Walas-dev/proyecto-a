@@ -11,17 +11,21 @@ export default function MagneticGridBackground() {
     if (!ctx) return;
 
     let animationFrameId: number;
+    let isVisible = true;
 
     const spacing = 30; 
     const lineLength = 12; 
-    const influenceRadius = 250;
     const baseOpacity = 0.15;
     const peakOpacity = 0.9; 
+    
+    const waveCycleDuration = 8; 
+    const waveWidth = 400;
+    const maxRotation = Math.PI;
 
-    let pointer = { x: -1000, y: -1000 };
-    let targetPointer = { x: -1000, y: -1000 };
+    let grid: any[] = [];
 
-    const resize = () => {
+    const buildGrid = () => {
+      grid = [];
       const dpr = window.devicePixelRatio || 1;
       const rect = canvas.parentElement?.getBoundingClientRect() || { width: window.innerWidth, height: window.innerHeight };
 
@@ -30,95 +34,102 @@ export default function MagneticGridBackground() {
       ctx.scale(dpr, dpr);
       canvas.style.width = `${rect.width}px`;
       canvas.style.height = `${rect.height}px`;
-    };
-
-    window.addEventListener("resize", resize);
-    resize();
-
-    const handlePointerMove = (clientX: number, clientY: number) => {
-      const rect = canvas.getBoundingClientRect();
-      targetPointer.x = clientX - rect.left;
-      targetPointer.y = clientY - rect.top;
-    };
-
-    const handlePointerLeave = () => {
-      targetPointer = { x: -1000, y: -1000 };
-    };
-
-    const onMouseMove = (e: MouseEvent) => handlePointerMove(e.clientX, e.clientY);
-    const onTouchMove = (e: TouchEvent) => {
-      if (e.touches.length > 0) handlePointerMove(e.touches[0].clientX, e.touches[0].clientY);
-    };
-
-    window.addEventListener("mousemove", onMouseMove);
-    window.addEventListener("mouseleave", handlePointerLeave);
-    window.addEventListener("touchmove", onTouchMove, { passive: true });
-    window.addEventListener("touchend", handlePointerLeave);
-
-    const draw = () => {
-      const rect = canvas.getBoundingClientRect();
-      ctx.clearRect(0, 0, rect.width, rect.height);
-
-      pointer.x += (targetPointer.x - pointer.x) * 0.1;
-      pointer.y += (targetPointer.y - pointer.y) * 0.1;
 
       const padding = spacing; 
-      
       const cols = Math.floor((rect.width - padding ) / spacing) + 1;
       const rows = Math.floor((rect.height - padding ) / spacing) + 1;
 
       const offsetX = (rect.width - ((cols - 1) * spacing)) / 2;
       const offsetY = (rect.height - ((rows - 1) * spacing)) / 2;
-      // -----------------------------------------------------------
+
+      for (let i = 0; i < cols; i++) {
+        for (let j = 0; j < rows; j++) {
+          const x = offsetX + (i * spacing);
+          const y = offsetY + (j * spacing);
+          grid.push({
+            x,
+            y,
+            diagonalPos: x + y 
+          });
+        }
+      }
+    };
+
+    window.addEventListener("resize", buildGrid);
+    buildGrid();
+
+    let lastTime = 0;
+    const fps = 30; 
+    const interval = 1000 / fps;
+
+    const draw = (currentTime: number) => {
+      if (!isVisible) return;
+      animationFrameId = requestAnimationFrame(draw);
+      
+      const deltaTime = currentTime - lastTime;
+      if (deltaTime < interval) return;
+      lastTime = currentTime - (deltaTime % interval);
+
+      const rect = canvas.getBoundingClientRect();
+      ctx.clearRect(0, 0, rect.width, rect.height);
 
       ctx.lineWidth = 1.5;
       ctx.lineCap = "round";
 
-      for (let i = 0; i < cols; i++) {
-        for (let j = 0; j < rows; j++) {
-          
-          const x = offsetX + (i * spacing);
-          const y = offsetY + (j * spacing);
+      const timeInSeconds = currentTime / 1000;
+      const maxDistance = rect.width + rect.height; 
+      const progress = (timeInSeconds % waveCycleDuration) / waveCycleDuration;
+      const currentWavePosition = (progress * (maxDistance + waveWidth * 2)) - waveWidth;
 
-          const dx = pointer.x - x;
-          const dy = pointer.y - y;
-          const distance = Math.sqrt(dx * dx + dy * dy);
-          
-          let angle = 0;
-          let currentOpacity = baseOpacity; 
+      for (let i = 0; i < grid.length; i++) {
+        const item = grid[i];
+        const distanceToWave = Math.abs(item.diagonalPos - currentWavePosition);
+        
+        let angle = 0;
+        let currentOpacity = baseOpacity; 
 
-          if (distance < influenceRadius) {
-            const force = 1 - (distance / influenceRadius); 
-            angle = Math.atan2(dy, dx) * force;
-            currentOpacity = baseOpacity + (force * (peakOpacity - baseOpacity));
-          }
-
-          ctx.save();
-          ctx.translate(x, y);
-          ctx.rotate(angle);
+        if (distanceToWave < waveWidth) {
+          const force = 1 - (distanceToWave / waveWidth);
+          const smoothForce = force * force * (3 - 2 * force); 
           
-          ctx.strokeStyle = `rgba(196, 139, 85, ${currentOpacity})`;
-          
-          ctx.beginPath();
-          ctx.moveTo(-lineLength / 2, 0);
-          ctx.lineTo(lineLength / 2, 0);
-          ctx.stroke();
-          
-          ctx.restore();
+          angle = smoothForce * maxRotation;
+          currentOpacity = baseOpacity + (smoothForce * (peakOpacity - baseOpacity));
         }
-      }
 
-      animationFrameId = requestAnimationFrame(draw);
+        ctx.save();
+        ctx.translate(item.x, item.y);
+        ctx.rotate(angle);
+        
+        ctx.strokeStyle = `rgba(196, 139, 85, ${currentOpacity})`;
+        
+        ctx.beginPath();
+        ctx.moveTo(-lineLength / 2, 0);
+        ctx.lineTo(lineLength / 2, 0);
+        ctx.stroke();
+        
+        ctx.restore();
+      }
     };
 
-    draw();
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          if (!isVisible) {
+            isVisible = true;
+            animationFrameId = requestAnimationFrame(draw);
+          }
+        } else {
+          isVisible = false;
+        }
+      },
+      { threshold: 0.01 }
+    );
+
+    observer.observe(canvas);
 
     return () => {
-      window.removeEventListener("resize", resize);
-      window.removeEventListener("mousemove", onMouseMove);
-      window.removeEventListener("mouseleave", handlePointerLeave);
-      window.removeEventListener("touchmove", onTouchMove);
-      window.removeEventListener("touchend", handlePointerLeave);
+      window.removeEventListener("resize", buildGrid);
+      observer.disconnect();
       cancelAnimationFrame(animationFrameId);
     };
   }, []);
@@ -126,7 +137,7 @@ export default function MagneticGridBackground() {
   return (
     <canvas
       ref={canvasRef}
-      className="absolute inset-0 z-0 pointer-events-auto"
+      className="absolute inset-0 z-0 pointer-events-none"
     />
   );
 }

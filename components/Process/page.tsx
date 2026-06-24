@@ -29,11 +29,12 @@ const ProcessCard = ({ step }: { step: any }) => {
 
   return (
     <div 
+      id='metodo'
       ref={ref}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       className={`
-        
+        scroll-mt-80
 
         relative z-10 flex flex-col items-start md:items-center text-left md:text-center gap-5 md:gap-6 p-6 md:p-8 rounded-4xl transition-all duration-500 border-2 h-full
         ${isLit 

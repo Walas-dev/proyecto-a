@@ -1,6 +1,7 @@
 'use client';
 import { useState } from 'react';
-import {Lista} from "@/ts/header";
+import { Lista } from "@/ts/header";
+import Link from 'next/link';
 
 interface LinkData {
   id: string | number;
@@ -22,7 +23,7 @@ const Nav = ({ Lista, className = '', isMobile = false, onLinkClick }: Navigatio
       <ul className={`flex ${isMobile ? ' flex-col w-auto ' : 'items-center gap-2 xl:gap-5'}`}>
         {Lista.map((l) => (
           <li key={l.id}>
-            <a
+            <Link
               href={l.url || '#'}
               onClick={onLinkClick}
               className={`group items-center text-secondary/90 transition-colors duration-300 px-4 py-2 rounded-lg text-base font-medium hover:text-primary whitespace-nowrap flex gap-1.5 ${
@@ -38,7 +39,7 @@ const Nav = ({ Lista, className = '', isMobile = false, onLinkClick }: Navigatio
                     <path  fill="currentColor" d={l.p}/>
                 </svg>
                 {l.space}
-            </a>
+            </Link>
           </li>
         ))}
       </ul>
@@ -46,8 +47,9 @@ const Nav = ({ Lista, className = '', isMobile = false, onLinkClick }: Navigatio
   );
 };
 
-export default function page() {
+export default function Page() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    
     return (
         <header className='sticky top-0 z-50 w-full bg-tertiary/15 backdrop-blur-2xl border-b border-white/5'>
             
@@ -62,18 +64,23 @@ export default function page() {
                 />
 
                 <button
-                    className='lg:hidden p-2 text-primary focus:outline-none z-50'
+                    className='lg:hidden relative w-8 h-8 flex flex-col items-center justify-center text-primary focus:outline-none z-50 cursor-pointer'
                     onClick={() => setIsMenuOpen(!isMenuOpen)}
                     aria-label={isMenuOpen ? "Cerrar menú" : "Abrir menú"}
                     aria-expanded={isMenuOpen}
                     >
-                    <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        {isMenuOpen ? (
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                        ) : (
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                        )}
-                    </svg>
+                    <span className={`absolute w-6 h-0.5 bg-current rounded-full transition-all duration-300 ease-in-out ${
+                        isMenuOpen ? 'rotate-45 translate-y-0' : '-translate-y-2'
+                    }`} />
+                    
+                    <span className={`absolute w-6 h-0.5 bg-current rounded-full transition-all duration-300 ease-in-out ${
+                        isMenuOpen ? 'opacity-0 -translate-x-4' : 'opacity-100 translate-x-0'
+                    }`} />
+                    
+                    {/* Línea Inferior */}
+                    <span className={`absolute w-6 h-0.5 bg-current rounded-full transition-all duration-300 ease-in-out ${
+                        isMenuOpen ? '-rotate-45 translate-y-0' : 'translate-y-2'
+                    }`} />
                 </button>
 
                 <div 
@@ -93,16 +100,7 @@ export default function page() {
                         onLinkClick={() => setIsMenuOpen(false)}
                     />
                 </div>
-
-
             </div>
         </header>
     )
-}
-
-{
-    /**
-     * <header className='sticky top-0 z-50 w-full flex justify-between items-center bg-tertiary/15 py-4 px-4 md:px-8 backdrop-blur-2xl border-b border-white/5'>
-     * 
-     */
 }
