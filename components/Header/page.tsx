@@ -1,31 +1,18 @@
 'use client';
 import { useState } from 'react';
-import { Lista } from "@/ts/header";
+import { Lista, NavigationProps } from "@/ts/header";
 import Link from 'next/link';
+import {handleSmoothScroll} from '@/ts/scroll'
 
-interface LinkData {
-  id: string | number;
-  space: string;
-  url?: string;
-  p:string;
-}
-
-interface NavigationProps {
-  Lista: LinkData[];
-  className?: string;      
-  isMobile?: boolean;       
-  onLinkClick?: () => void; 
-}
-
-const Nav = ({ Lista, className = '', isMobile = false, onLinkClick }: NavigationProps) => {
+const Nav = ({ Lista, className = '', isMobile = false, onLinkClick}: NavigationProps) => {
   return (
     <nav className={className}>
       <ul className={`flex ${isMobile ? ' flex-col w-auto ' : 'items-center gap-2 xl:gap-5'}`}>
         {Lista.map((l) => (
           <li key={l.id}>
             <Link
-              href={l.url || '#'}
-              onClick={onLinkClick}
+              href={l.ref || '#'}
+              onClick={(e)=>handleSmoothScroll(e, l.ref || '#', onLinkClick)}
               className={`group items-center text-secondary/90 transition-colors duration-300 px-4 py-2 rounded-lg text-base font-medium hover:text-primary whitespace-nowrap flex gap-1.5 ${
                 isMobile 
                   ? 'block text-lg font-medium hover:bg-primary/10 py-5' 

@@ -1,5 +1,6 @@
 import {Img, Redes} from "@/ts/footer";
 import SVG from '../Footer/iluminarSVG'
+import Link from "next/link";
 export default function page() {
   return (
     <footer className="w-full bg-tertiary/15 flex flex-col">
@@ -12,10 +13,9 @@ export default function page() {
             </h2>
             <div className='flex gap-5 items-center'>
                 {Redes.map((r)=>(
-                    <a 
+                    <Link 
                         key={r.id}
-                        href=''
-                        target="_blank" 
+                        href={r.ref || '#'}
                         rel="noopener noreferrer"
                         aria-label={`Visitar nuestro perfil en ${r.name || 'redes sociales'}`}
                         className="group relative w-7 h-7 hover:scale-110 transition-transform duration-300"
@@ -26,7 +26,7 @@ export default function page() {
                         >
                             <path  fill="currentColor" d={r.p}/>
                         </svg>
-                    </a>
+                    </Link>
                 ))}
             </div>
         </div>

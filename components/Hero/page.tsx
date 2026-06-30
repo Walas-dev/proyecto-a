@@ -1,3 +1,4 @@
+'use client'
 import React from 'react'
 import Button from '../UI/Button'
 import { button } from '@/ts/hero'
@@ -27,12 +28,16 @@ export default function page() {
         </h2>
 
         <p className='text-primary/75 text-base md:text-lg lg:text-xl max-w-2xl text-pretty mb-8'>
-            Arquitectura de control de acceso diseñada para porteger con precisíon técnica.
+            Arquitectura de control de acceso diseñada para proteger con precisión técnica.
         </p>
 
         <div className='flex flex-col sm:flex-row w-full sm:w-auto gap-4'>
             {button.map((b)=>(
-              <Button key={b.id} variant={b.id=== 1 ? 'primary' : 'secondary'}>
+              <Button 
+                key={b.id} 
+                variant={b.id=== 1 ? 'primary' : 'secondary'} 
+                ref={`${b.ref}`}
+              >
                 { b.id === 1 ? (
                     <svg 
                       viewBox="0 0 448 512"

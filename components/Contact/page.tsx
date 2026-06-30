@@ -1,3 +1,4 @@
+'use client'
 import Button from '../UI/Button'
 import {button} from '@/ts/contact'
 import Fondo from './fondo'
@@ -17,7 +18,11 @@ export default function page() {
 
             <div className='flex flex-col sm:flex-row w-full sm:w-auto gap-4'>
                 {button.map((b)=>(
-                  <Button key={b.id} variant={b.id === 1 ? 'primary' : 'secondary'}>
+                  <Button 
+                    key={b.id}
+                    variant={b.id === 1 ? 'primary' : 'secondary'}
+                    ref={`${b.ref}`}
+                  >
                       <div>
                         <svg 
                           viewBox="0 0 448 512"
