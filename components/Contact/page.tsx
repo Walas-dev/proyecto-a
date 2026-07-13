@@ -7,7 +7,7 @@ export default function page() {
       <section id='contact' className='relative w-full min-h-[80vh] px-4 md:px-8 py-24 md:py-32 flex flex-col justify-center items-center text-center bg-tertiary/10 scroll-mt-20'>
         <Fondo/>
         <div className='flex flex-col items-center max-w-3xl mx-auto'>
-            <h2 className='text-[1.85rem] md:text-5xl lg:text-[3rem] font-extrabold leading-tight text-balance mb-6'>
+            <h2 className='text-white text-[1.85rem] md:text-5xl lg:text-[3rem] font-extrabold leading-tight text-balance mb-6'>
               ¿Está su infraestructura
                 <br className='hidden sm:block'/> realmente protegida?
             </h2>

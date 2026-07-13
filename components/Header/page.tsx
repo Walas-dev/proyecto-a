@@ -42,7 +42,7 @@ export default function Page() {
             
             <div className='flex justify-between items-center py-4 px-4 md:px-8'>
                 <div className='text-primary font-black uppercase text-xl md:text-[1.5rem] tracking-wider shrink-0 z-50'>
-                        Proyect a
+                        ALC Systems
                 </div>
 
                 <Nav

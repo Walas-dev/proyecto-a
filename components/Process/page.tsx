@@ -38,7 +38,7 @@ const ProcessCard = ({ step }: { step: any }) => {
 
         relative z-10 flex flex-col items-start md:items-center text-left md:text-center gap-5 md:gap-6 p-6 md:p-8 rounded-4xl transition-all duration-500 border-2 h-full
         ${isLit 
-          ? '-translate-y-2 bg-[#0F0F17]/95 backdrop-blur-xl border-primary/50 shadow-2xl shadow-primary/20' 
+          ? 'border-primary bg-primary/5 -translate-y-2  backdrop-blur-xl shadow-2xl shadow-primary/20' 
           : 'translate-y-0  backdrop-blur-md border-white/5 shadow-none'}
       `}
     >
@@ -61,7 +61,7 @@ const ProcessCard = ({ step }: { step: any }) => {
 export default function Page() {
   return (
     <section className='flex flex-col items-center px-4 md:px-8 py-16 md:py-24 w-full bg-transparent'>
-      <h3 className='text-3xl md:text-4xl lg:text-5xl font-extrabold pb-6 text-center text-balance'>
+      <h3 className='text-3xl md:text-4xl lg:text-5xl font-extrabold pb-6 text-center text-balance text-white'>
         Proceso Metodológico
       </h3>
       

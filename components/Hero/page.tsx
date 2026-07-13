@@ -22,7 +22,7 @@ export default function page() {
       <div className='absolute inset-0 backdrop-blur-md bg-neground/50 z-10' />
 
       <div className='relative  z-30 flex flex-col items-center'>   
-        <h2 className='text-[2.3rem] md:text-5xl lg:text-6xl font-extrabold leading-tight text-balance mb-6'>
+        <h2 className='text-[2.3rem] md:text-5xl lg:text-6xl font-extrabold leading-tight text-balance mb-6 text-white'>
             Seguridad Integral para 
             <br className='hidden md:block'/> Entornos Exigentes.
         </h2>

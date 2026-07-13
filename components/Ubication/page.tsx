@@ -23,7 +23,7 @@ export default function page() {
 
             <div className='flex flex-col gap-6 md:gap-8'>
               <div>
-                  <h2 className='text-3xl md:text-4xl lg:text-[2.5rem] leading-tight font-extrabold py-2'>
+                  <h2 className='text-3xl md:text-4xl lg:text-[2.5rem] leading-tight font-extrabold py-2 text-white'>
                       Soporte Táctico Regional
                   </h2>
                   <p className='text-secondary/65 text-pretty text-base md:text-lg mt-2'>
