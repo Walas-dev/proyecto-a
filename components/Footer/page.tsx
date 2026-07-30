@@ -9,7 +9,7 @@ export default function page() {
             <h2 
             className='text-primary font-bold uppercase text-2xl md:text-[1.5rem] tracking-wider text-center'
             >
-                    ALC Systems
+                    AL Systems
             </h2>
             <div className='flex gap-5 items-center'>
                 {Redes.map((r)=>(
@@ -50,7 +50,7 @@ export default function page() {
 
       <section className='bg-linear-to-b from-transparent to-tertiary/20 px-4 md:px-8 py-6 flex flex-col items-center gap-6 border-t border-white/5'>
         <p className="text-secondary/60 font-light text-center text-xs md:text-sm text-balance">
-          &copy; {new Date().getFullYear()} ALC Systems. Elite Excutive Protection.
+          &copy; {new Date().getFullYear()} AL Systems. Elite Excutive Protection.
         </p>
       </section>
     </footer>

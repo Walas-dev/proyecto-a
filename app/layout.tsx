@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "ALC Systems",
-  description: "Walas by create ALC Systems",
+  title: "AL-Systems",
+  description: "AL Systems create by solutions, networks and security",
 };
 
 export default function RootLayout({

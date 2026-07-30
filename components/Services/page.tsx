@@ -30,7 +30,6 @@ const ServiceCard = ({ c }: { c: any }) => {
     }
   }, []);
 
-  // La magia se mantiene intacta
   const isLit = isTouchDevice ? isInView : isHovered;
 
   return (
